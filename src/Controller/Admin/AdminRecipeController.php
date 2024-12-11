@@ -78,27 +78,40 @@ class AdminRecipeController extends AbstractController
     #[Route('/admin/recipe/{id}/update', 'admin_update_recipe', requirements: ['id' => '\d+'] ,methods: ['POST', 'GET'])]
     public function updateRecipe(int $id, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository, ParameterBagInterface $parameterBag)
     {
+        //récupère la recette qui correspond à l'id dans l'url
         $recipe = $recipeRepository->find($id);
 
+        //crée un formulaire prérempli avec les données de la recette
         $adminRecipeForm = $this->createForm(AdminRecipeType::class, $recipe);
+        //lie les données de la requête au formulaire
         $adminRecipeForm->handleRequest($request);
 
+        //vérifie si le formulaire est soumis
         if ($adminRecipeForm->isSubmitted()) {
 
+            //récupère l'image du formulaire
             $recipeImage = $adminRecipeForm->get('image')->getData();
             {
                 if ($recipeImage) {
+                    //génère un nom unique
                     $imageNewFilename = uniqid() . '.' . $recipeImage->guessExtension();
+                    //récupère le répertoire racine du projet
                     $rootDir = $parameterBag->get('kernel.project_dir');
+                    //définit le dossier de stockage
                     $imgDir = $rootDir . '/public/assets/img';
+                    //déplace l'image
                     $recipeImage->move($imgDir, $imageNewFilename);
+                    //définit le nom de l'image dans l'entité
                     $recipe->setImage($imageNewFilename);
                 }
             }
+            //prépare la mise à jour
             $entityManager->persist($recipe);
+            //sauvegarde les changements en bdd
             $entityManager->flush();
+            //message de confirmation
             return $this->redirectToRoute('admin_list_recipes');
-
+            //redirige vers la liste
             $this->addFlash('success', 'Recette modifiée');
         }
 
@@ -112,13 +125,16 @@ class AdminRecipeController extends AbstractController
     #[Route('/admin/recipe/{id}/delete', 'admin_delete_recipe', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function deleteRecipe(int $id, RecipeRepository $recipeRepository, EntityManagerInterface $entityManager)
     {
-
+        //récupère la recette qui correspond à l'id dans l'url
         $recipe = $recipeRepository->find($id);
 
+        //prépare la suppression
         $entityManager->remove($recipe);
+        //supprime en bdd
         $entityManager->flush();
+        //ajout message confirmation
         $this->addFlash('succes', 'Recette supprimée');
-
+        //redirige vers la liste
         return $this->redirectToRoute('admin_list_recipes');
 
     }
