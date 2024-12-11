@@ -32,6 +32,9 @@ class Recipe
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     private ?Category $category = null;
 
+    #[ORM\Column]
+    private ?bool $isPublished = null;
+
     public function __construct()
     {
         // Initialise automatiquement createdAt à la date actuelle, pas besoin de le définir lors du submit
@@ -111,6 +114,18 @@ class Recipe
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): static
+    {
+        $this->isPublished = $isPublished;
 
         return $this;
     }

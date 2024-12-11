@@ -1,0 +1,19 @@
+{% extends 'public/base.html.twig' %}
+
+{% block metatitle %}Les recettes cools{% endblock metatitle %}
+
+{% block body %}
+
+    <main>
+
+        {% for recipe in publishedRecipes %}
+        <article>
+            <p>{{ recipe.title }}</p>
+
+            <img src="{{ asset('assets/img/' ~ recipe.image) }}" alt="">
+            <a href="{{ path('show_recipe', {id: recipe.id}) }}">Voir la recette</a>
+        </article>
+        {% endfor %}
+    </main>
+
+{% endblock body %}

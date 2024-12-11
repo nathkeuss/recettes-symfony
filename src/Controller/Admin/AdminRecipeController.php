@@ -134,7 +134,7 @@ class AdminRecipeController extends AbstractController
         $entityManager->flush();
         //ajout message confirmation
         $this->addFlash('succes', 'Recette supprimée');
-        //redirige vers la liste
+        //redirige vers la liste des recettes
         return $this->redirectToRoute('admin_list_recipes');
 
     }
