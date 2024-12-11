@@ -76,7 +76,7 @@ class AdminRecipeController extends AbstractController
     }
 
     #[Route('/admin/recipe/{id}/update', 'admin_update_recipe', requirements: ['id' => '\d+'] ,methods: ['POST', 'GET'])]
-    public function updateRecipe(int $id, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository)
+    public function updateRecipe(int $id, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository, ParameterBagInterface $parameterBag)
     {
         $recipe = $recipeRepository->find($id);
 
@@ -84,9 +84,22 @@ class AdminRecipeController extends AbstractController
         $adminRecipeForm->handleRequest($request);
 
         if ($adminRecipeForm->isSubmitted()) {
+
+            $recipeImage = $adminRecipeForm->get('image')->getData();
+            {
+                if ($recipeImage) {
+                    $imageNewFilename = uniqid() . '.' . $recipeImage->guessExtension();
+                    $rootDir = $parameterBag->get('kernel.project_dir');
+                    $imgDir = $rootDir . '/public/assets/img';
+                    $recipeImage->move($imgDir, $imageNewFilename);
+                    $recipe->setImage($imageNewFilename);
+                }
+            }
             $entityManager->persist($recipe);
             $entityManager->flush();
             return $this->redirectToRoute('admin_list_recipes');
+
+            $this->addFlash('success', 'Recette modifiée');
         }
 
         $adminRecipeFormView = $adminRecipeForm->createView();
