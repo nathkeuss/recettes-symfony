@@ -9,6 +9,7 @@
             <th>Id</th>
             <th>Nom</th>
             <th>Date de création</th>
+            <th>Image</th>
         </tr>
 
         {% for recipe in recipes %}
@@ -16,6 +17,9 @@
             <td>{{ recipe.id }}</td>
             <td>{{ recipe.title }}</td>
             <td>{{ recipe.createdAt | date('d-m-Y') }}</td>
+            <td><img src="{{ asset('assets/img/' ~ recipe.image) }}" alt=""></td>
+            <td><a href="{{ path('admin_delete_recipe', {'id': recipe.id}) }}">Supprimer</a></td>
+            <td><a href="{{ path('admin_update_recipe', {'id': recipe.id}) }}">Modifier</a></td>
         </tr>
         {% endfor %}
     </table>
