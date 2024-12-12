@@ -2,6 +2,49 @@
 
 {% block body %}
 
-{{ form(adminRecipeFormView) }}
+
+    {{ form_start(adminRecipeFormView) }}
+
+    <div>
+        {{ form_label(adminRecipeFormView.title) }}
+        {{ form_widget(adminRecipeFormView.title) }}
+        {{ form_errors(adminRecipeFormView.title) }}
+    </div>
+
+    <div>
+        {{ form_label(adminRecipeFormView.image) }}
+        {{ form_widget(adminRecipeFormView.image) }}
+        {{ form_errors(adminRecipeFormView.image) }}
+    </div>
+
+    <div>
+        {{ form_label(adminRecipeFormView.ingredients) }}
+        {{ form_widget(adminRecipeFormView.ingredients) }}
+        {{ form_errors(adminRecipeFormView.ingredients) }}
+    </div>
+
+    <div>
+        {{ form_label(adminRecipeFormView.instructions) }}
+        {{ form_widget(adminRecipeFormView.instructions) }}
+        {{ form_errors(adminRecipeFormView.instructions) }}
+    </div>
+
+    <div>
+        {{ form_label(adminRecipeFormView.category) }}
+        {{ form_widget(adminRecipeFormView.category) }}
+        {{ form_errors(adminRecipeFormView.category) }}
+    </div>
+
+    <div>
+        {{ form_label(adminRecipeFormView.isPublished) }}
+        {{ form_widget(adminRecipeFormView.isPublished) }}
+        {{ form_errors(adminRecipeFormView.isPublished) }}
+    </div>
+
+    <div>
+        {{ form_widget(adminRecipeFormView.Valider) }}
+    </div>
+
+    {{ form_end(adminRecipeFormView) }}
 
 {% endblock body %}

@@ -28,7 +28,7 @@ class AdminRecipeController extends AbstractController
         $adminRecipeForm->handleRequest($request);
 
         //si le formulaire a été soumis
-        if ($adminRecipeForm->isSubmitted()) {
+        if ($adminRecipeForm->isSubmitted() && $adminRecipeForm->isValid()) {
 
             $recipeImage = $adminRecipeForm->get('image')->getData();
 
@@ -87,7 +87,7 @@ class AdminRecipeController extends AbstractController
         $adminRecipeForm->handleRequest($request);
 
         //vérifie si le formulaire est soumis
-        if ($adminRecipeForm->isSubmitted()) {
+        if ($adminRecipeForm->isSubmitted() && $adminRecipeForm->isValid()) {
 
             //récupère l'image du formulaire
             $recipeImage = $adminRecipeForm->get('image')->getData();
