@@ -14,7 +14,10 @@
         <tr>
             <td>{{ user.id }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.roles | json_encode }}</td>
+            <td>{% for role in user.roles %}
+                {{ role }}
+                {% endfor %}
+            </td>
         </tr>
         {% endfor %}
     </table>
