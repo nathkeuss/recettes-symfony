@@ -13,7 +13,7 @@ class HomeController extends AbstractController
     {
 
         /*dd('salut'); die;*/
-        return $this->render('home.html.twig');
+        return $this->render('public/home.html.twig');
 
     }
 

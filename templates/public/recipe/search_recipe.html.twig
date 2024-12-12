@@ -1,0 +1,20 @@
+{% extends 'public/base.html.twig' %}
+
+{% block metatitle %}Résultat de rechercher pour "{{ search }}"{% endblock metatitle %}
+
+{% block body %}
+
+    <main>
+
+        <h1>Voici le résultat pour votre recherche "{{ search }}"</h1>
+
+        {% for recipe in recipes %}
+            <article>
+                <p>{{ recipe.title }}</p>
+                <img src="{{ asset('assets/img/' ~ recipe.image) }}" alt="">
+                <a href="{{ path('show_recipe', {id: recipe.id}) }}">Voir la recette</a>
+            </article>
+        {% endfor %}
+    </main>
+
+{% endblock body %}
