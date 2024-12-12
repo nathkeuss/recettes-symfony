@@ -10,6 +10,12 @@
 <header>
     <h1>Les recettes folles</h1>
     <a href="{{ path('login') }}">Se connecter</a>
+
+    <nav>
+        <ul>
+            <li><a href="{{ path('list_recipes') }}">Liste des recettes</a></li>
+        </ul>
+    </nav>
     <form method="get" action="{{ path('search_recipes') }}">
         <label>
             <input type="text" name="search"/>

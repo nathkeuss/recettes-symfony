@@ -1,7 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends "public/base.html.twig" %}
 
-{% block metatitle %}Default Title{% endblock metatitle %}
+{% block title %}{{ recipe.title }}{% endblock %}
 
-{% block main %}
-    <!-- Content here -->
-{% endblock main %}
+{% block body %}
+
+    <main>
+
+        <article>
+            <p>{{ recipe.title }}</p>
+
+            <img  src="{{ asset('assets/uploads/' ~ recipe.image) }}" />
+
+            <p>{{ recipe.instructions }}</p>
+
+            <p>Catégorie : {{ recipe.category.title }}</p>
+        </article>
+
+    </main>
+
+{% endblock %}
