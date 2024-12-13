@@ -18,6 +18,7 @@
                 {{ role }}
                 {% endfor %}
             </td>
+            <td><a href="{{ path('admin_delete_user', {'id': user.id}) }}">SUPPRIMER l'utilisateur</a></td>
         </tr>
         {% endfor %}
     </table>
