@@ -13,8 +13,11 @@
 
     <nav>
         <ul>
+            <li><a href="{{ path('admin_update_user', {id : app.user.id}) }}">Connecté en tant que {{ app.user.email }}</a></li>
             <li><a href="{{ path('admin_create_recipe') }}">Ajouter une recette</a></li>
+            <li><a href="{{ path('admin_create_category') }}">Ajouter une catégorie</a></li>
             <li><a href="{{ path('admin_list_recipes') }}">Voir toutes les recettes</a></li>
+            <li><a href="{{ path('admin_list_categories') }}">Voir toutes les catégories</a></li>
             <li><a href="{{ path('admin_list') }}">Voir la liste des admins</a></li>
             <li><a href="{{ path('admin_create_user') }}">Créer un utilisateur</a></li>
             <li><a href="{{ path('logout') }}">Se déconnecter</a></li>

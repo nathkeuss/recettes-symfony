@@ -29,6 +29,7 @@ class AdminUserType extends AbstractType
             ->add('password', PasswordType::class, [
                 'label' => 'Password',
                 'mapped' => false,
+                'required' => false,
             ])
             ->add('Valider', SubmitType::class);
     }

@@ -61,6 +61,11 @@ class AdminUserController extends AbstractController
         //récupère l'user qui correspond à l'id dans l'url
         $user = $userRepository->find($id);
 
+        if($id === $this->getUser()->getId()){
+            $this->addFlash('success', 'vous ne pouvez pas parce que vous êtes connecté'); //faudrait changer le succes en error mais flemme
+            return $this->redirectToRoute('admin_list');
+        }
+
         //prépare la suppression
         $entityManager->remove($user);
         //supprime en bdd
@@ -69,6 +74,37 @@ class AdminUserController extends AbstractController
         $this->addFlash('succes', 'Utilisateur supprimé de ce monde');
         //redirige vers la liste des recettes
         return $this->redirectToRoute('admin_list');
+
+    }
+
+
+    #[Route('/admin/user/{id}/update', 'admin_update_user', methods: ['GET', 'POST'])]
+    public function updateUser(int $id, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
+    {
+        $user = $userRepository->find($id);
+
+        $adminUserForm = $this->createForm(AdminUserType::class, $user);
+
+        $adminUserForm->handleRequest($request);
+
+        if ($adminUserForm->isSubmitted()) {
+
+            $newPassword = $adminUserForm->get('password')->getData();
+
+            if ($newPassword) {
+                $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($hashedPassword);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_list');
+        }
+
+        $adminUserFormView = $adminUserForm->createView();
+
+        return $this->render('admin/user/update_user.html.twig', [
+            'adminUserFormView' => $adminUserFormView,
+        ]);
 
     }
 

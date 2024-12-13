@@ -1,0 +1,21 @@
+{% extends "public/base.html.twig" %}
+
+{% block title %}{{ category.title }}{% endblock %}
+
+{% block body %}
+
+    <main>
+        <p>{{ category.title }}</p>
+        {% for recipe in publishedRecipes %}
+        <article>
+
+            <img  src="{{ asset('assets/uploads/' ~ recipe.image) }}" />
+
+            <p>{{ recipe.instructions }}</p>
+
+        </article>
+        {% endfor %}
+
+    </main>
+
+{% endblock %}

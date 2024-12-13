@@ -12,6 +12,7 @@
 
             <img src="{{ asset('assets/img/' ~ recipe.image) }}" alt="">
             <a href="{{ path('show_recipe', {id: recipe.id}) }}">Voir la recette</a>
+            <a href="{{ path('show_category', {id: recipe.category.id}) }}">Catégorie : {{ recipe.category.title }}</a>
         </article>
         {% endfor %}
     </main>

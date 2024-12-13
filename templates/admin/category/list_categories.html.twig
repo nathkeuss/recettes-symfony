@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+
+    <h1>Toutes les catégories</h1>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Titre de la catégorie</th>
+            <th>Date de création</th>
+        </tr>
+
+        <a href="{{ path('admin_create_category') }}">Créer une catégorie</a>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.title }}</td>
+            <td>{{ category.createdAt | date('d-m-Y') }}</td>
+            <td><a href="{{ path('admin_delete_category', {'id': category.id}) }}">Supprimer</a></td>
+            <td><a href="{{ path('admin_update_category', {'id': category.id}) }}">Modifier</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock body %}

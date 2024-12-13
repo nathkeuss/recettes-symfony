@@ -13,14 +13,24 @@
 
     <nav>
         <ul>
+{#
+            <li><a href="{{ path('admin_update_user', {id : app.user.id}) }}">Connecté en tant que {{ app.user.email }}</a></li>
+#}
             <li><a href="{{ path('list_recipes') }}">Liste des recettes</a></li>
+            <li><a href="{{ path('list_categories') }}">Liste des catégories</a></li>
         </ul>
     </nav>
     <form method="get" action="{{ path('search_recipes') }}">
         <label>
-            <input type="text" name="search"/>
+            <input type="text" name="search" placeholder="Rechercher une recette"/>
         </label>
+        <input type="submit" placeholder="Rechercher">
+    </form>
 
+    <form method="get" action="{{ path('search_categories') }}">
+        <label>
+            <input type="text" name="search" placeholder="Rechercher une catégorie"/>
+        </label>
         <input type="submit" placeholder="Rechercher">
     </form>
 </header>

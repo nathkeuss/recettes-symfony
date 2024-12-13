@@ -19,6 +19,7 @@
                 {% endfor %}
             </td>
             <td><a href="{{ path('admin_delete_user', {'id': user.id}) }}">SUPPRIMER l'utilisateur</a></td>
+            <td><a href="{{ path('admin_update_user', {'id': user.id}) }}">Modifier l'utilisateur</a></td>
         </tr>
         {% endfor %}
     </table>
