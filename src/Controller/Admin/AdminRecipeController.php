@@ -104,7 +104,7 @@ class AdminRecipeController extends AbstractController
             $recipeImage = $adminRecipeForm->get('image')->getData();
             {
                 if ($recipeImage) {
-                    //récupère le nom original de l'image (exemple : poulet.png)
+                    //récupère le nom original de l'image (exemple : poulet)
                     $imageOriginalName = $recipeImage->getClientOriginalName();
                     //récupère l'extension (png, jpeg etc) de l'image
                     $imageExtension = $recipeImage->guessExtension();
