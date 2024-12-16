@@ -40,8 +40,8 @@ class AdminRecipeController extends AbstractController
                 //récupère l'extension (png, jpeg etc) de l'image
                 $imageExtension = $recipeImage->guessExtension();
                 //utilise une fonction de ma class UniqueFilenameGenerator, que j'ai instancié dans les
-                //paramètre de la fonction updateRecipe, la fonction de la class instanciée
-                //prend en premier paramètre paramètre :
+                //paramètres de la fonction updateRecipe, la fonction de la class instanciée
+                //prend en premier paramètre :
                 //le nom de l'image, qui lui donne une id unique, hash le nom, lui donne le timestamp actuel
                 //et en second paramètre ajoute l'extension de l'image.
                 $imageNewFilename = $uniqueFilenameGenerator->generateUniqueFilename($imageOriginalName, $imageExtension);
@@ -109,8 +109,8 @@ class AdminRecipeController extends AbstractController
                     //récupère l'extension (png, jpeg etc) de l'image
                     $imageExtension = $recipeImage->guessExtension();
                     //utilise une fonction de ma class UniqueFilenameGenerator, que j'ai instancié dans les
-                    //paramètre de la fonction updateRecipe, la fonction de la class instanciée
-                    //prend en premier paramètre paramètre :
+                    //paramètres de la fonction updateRecipe, la fonction de la class instanciée
+                    //prend en premier paramètre :
                     //le nom de l'image, qui lui donne une id unique, hash le nom, lui donne le timestamp actuel
                     //et en second paramètre ajoute l'extension de l'image.
                     $imageNewFilename = $uniqueFilenameGenerator->generateUniqueFilename($imageOriginalName, $imageExtension);
