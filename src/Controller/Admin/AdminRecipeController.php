@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Recipe;
 use App\Form\AdminRecipeType;
 use App\Repository\RecipeRepository;
+use App\Service\UniqueFilenameGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -15,7 +16,7 @@ class AdminRecipeController extends AbstractController
 {
 
     #[Route('admin/recipe/create', 'admin_create_recipe', methods: ['GET', 'POST'])]
-    public function createRecipe(Request $request, EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
+    public function createRecipe(UniqueFilenameGenerator $uniqueFilenameGenerator,Request $request, EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
     {
         //nouvelle instance de l'entité Recipe, qui sera utilisée pour construire le formulaire
         $recipe = new Recipe();
@@ -33,7 +34,17 @@ class AdminRecipeController extends AbstractController
             $recipeImage = $adminRecipeForm->get('image')->getData();
 
             if ($recipeImage) {
-                $imageNewFilename = uniqid() . '.' . $recipeImage->guessExtension();
+
+                //récupère le nom original de l'image (exemple : poulet.png)
+                $imageOriginalName = $recipeImage->getClientOriginalName();
+                //récupère l'extension (png, jpeg etc) de l'image
+                $imageExtension = $recipeImage->guessExtension();
+                //utilise une fonction de ma class UniqueFilenameGenerator, que j'ai instancié dans les
+                //paramètre de la fonction updateRecipe, la fonction de la class instanciée
+                //prend en premier paramètre paramètre :
+                //le nom de l'image, qui lui donne une id unique, hash le nom, lui donne le timestamp actuel
+                //et en second paramètre ajoute l'extension de l'image.
+                $imageNewFilename = $uniqueFilenameGenerator->generateUniqueFilename($imageOriginalName, $imageExtension);
 
                 $rootDir = $parameterBag->get('kernel.project_dir');
 
@@ -76,7 +87,7 @@ class AdminRecipeController extends AbstractController
     }
 
     #[Route('/admin/recipe/{id}/update', 'admin_update_recipe', requirements: ['id' => '\d+'] ,methods: ['POST', 'GET'])]
-    public function updateRecipe(int $id, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository, ParameterBagInterface $parameterBag)
+    public function updateRecipe(int $id, UniqueFilenameGenerator $uniqueFilenameGenerator, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository, ParameterBagInterface $parameterBag)
     {
         //récupère la recette qui correspond à l'id dans l'url
         $recipe = $recipeRepository->find($id);
@@ -93,8 +104,17 @@ class AdminRecipeController extends AbstractController
             $recipeImage = $adminRecipeForm->get('image')->getData();
             {
                 if ($recipeImage) {
-                    //génère un nom unique
-                    $imageNewFilename = uniqid() . '.' . $recipeImage->guessExtension();
+                    //récupère le nom original de l'image (exemple : poulet.png)
+                    $imageOriginalName = $recipeImage->getClientOriginalName();
+                    //récupère l'extension (png, jpeg etc) de l'image
+                    $imageExtension = $recipeImage->guessExtension();
+                    //utilise une fonction de ma class UniqueFilenameGenerator, que j'ai instancié dans les
+                    //paramètre de la fonction updateRecipe, la fonction de la class instanciée
+                    //prend en premier paramètre paramètre :
+                    //le nom de l'image, qui lui donne une id unique, hash le nom, lui donne le timestamp actuel
+                    //et en second paramètre ajoute l'extension de l'image.
+                    $imageNewFilename = $uniqueFilenameGenerator->generateUniqueFilename($imageOriginalName, $imageExtension);
+
                     //récupère le répertoire racine du projet
                     $rootDir = $parameterBag->get('kernel.project_dir');
                     //définit le dossier de stockage
